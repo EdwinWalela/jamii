@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class SHA256 {
-    static String sha256(String source) throws NoSuchAlgorithmException {
+    public static String hash(String source) throws NoSuchAlgorithmException {
         // Get algorithim instance
         final MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
         // Calculate Digest Value (returns byte array)
