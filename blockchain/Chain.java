@@ -43,4 +43,15 @@ public class Chain {
         pending_tx.clear();
         return blk.getHash();
     }
+
+    public boolean isValid(){
+        for(int i = 0; i < chain.size()-1; i++){
+            if(chain.get(i+1).getPrev_hash() == chain.get(i).getHash()){
+                continue;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
 }

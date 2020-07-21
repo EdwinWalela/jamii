@@ -11,8 +11,6 @@ public class Main {
         Chain jamii = new Chain();
         jamii.add_tx(new Transaction("edwin","joy"));
         jamii.mine_block("edwin");
-        int hash = jamii.latestBlock().getNonce();
 
-        System.out.println(hash);
     }
 }
