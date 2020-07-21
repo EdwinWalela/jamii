@@ -1,16 +1,20 @@
 package com.company;
 
-import com.company.blockchain.Block;
-import com.company.blockchain.Chain;
-import com.company.blockchain.Transaction;
+import com.company.crypto.EC;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Chain jamii = new Chain();
-        jamii.add_tx(new Transaction("edwin","joy"));
-        jamii.mine_block("edwin");
+        EC curve = new EC();
 
+        curve.gen();
+        String pub = curve.getPubKey();
+        String priv = curve.getPrivKey();
+        curve.calc();
+
+        System.out.println("public key:"+pub+"\n");
+        System.out.println("private key:"+priv+"\n");
+        System.out.println(curve.keyMatch());
     }
 }
