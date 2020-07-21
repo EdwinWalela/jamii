@@ -48,4 +48,30 @@ public class Block {
     public String getHash() {
         return hash;
     }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getNonce() {
+        return nonce;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public String getPrev_hash() {
+        return prev_hash;
+    }
+
+    public int getDIFF() {
+        return DIFF;
+    }
+
+    public Transaction getTx(int index) {
+        return tx.get(index);
+    }
 }
+
+
