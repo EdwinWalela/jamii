@@ -1,13 +1,18 @@
 package com.company;
 
 import com.company.blockchain.Block;
+import com.company.blockchain.Chain;
 import com.company.blockchain.Transaction;
 
 public class Main {
 
     public static void main(String[] args) {
-	// write your code
-        Block bl = new Block();
-        System.out.println(bl.getHash());
+
+        Chain jamii = new Chain();
+        jamii.add_tx(new Transaction("edwin","joy"));
+        jamii.mine_block("edwin");
+        int hash = jamii.latestBlock().getNonce();
+
+        System.out.println(hash);
     }
 }
