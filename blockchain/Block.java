@@ -17,7 +17,7 @@ public class Block {
     private List<Transaction> tx;
 
     public Block(){
-
+        height = 0;
         timestamp = System.currentTimeMillis();
         tx = new ArrayList<>();
     }
@@ -51,6 +51,7 @@ public class Block {
 
     public void addTx(Transaction _tx){
         tx.add(_tx);
+        height++;
     }
 
     public String getHash() {

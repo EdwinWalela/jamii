@@ -40,7 +40,7 @@ public class EC {
 
     }
 
-    public void gen() {
+    protected void gen() {
         generator.init(keyGenParams);
         keyPair = generator.generateKeyPair();
         privateKey = (ECPrivateKeyParameters) keyPair.getPrivate();
@@ -51,13 +51,13 @@ public class EC {
         privKey = toHex(publicKey.getQ().getEncoded(true));
     }
 
-    public String calc(){
+    protected String calc(){
         // calculate the public key only using domainParams.getG() and private key
         Q = domainParams.getG().multiply(new BigInteger(privateKeyBytes));
         return toHex(Q.getEncoded(true));
     }
 
-    public boolean keyMatch(){
+    protected boolean keyMatch(){
         // The calculated public key and generated public key should always match
         return (toHex(publicKey.getQ().getEncoded(true)).equals(toHex(Q.getEncoded(true))));
     }

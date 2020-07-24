@@ -15,7 +15,7 @@ public class Chain {
 
     public Block genesis(){
         Block blk = new Block();
-        blk.addTx(new Transaction("",""));
+        blk.addTx(new Transaction("","",0));
         blk.hash();
         return blk;
     }
@@ -30,7 +30,7 @@ public class Chain {
 
     public String mine_block(String miner_address){
         Block blk = new Block();
-        Transaction coinBase = new Transaction(miner_address,"");
+        Transaction coinBase = new Transaction(miner_address,"",0);
         if(pending_tx.size()>0){
             blk.addTx(coinBase);
             for(int i = 0; i < pending_tx.size(); i++) {
@@ -53,5 +53,19 @@ public class Chain {
             }
         }
         return true;
+    }
+
+    public double getBalance(Wallet wal){
+        String pubkey = wal.getPubKey();
+        double bal = 0;
+        for(int i = 0; i < chain.size(); i++){
+            Block blk = chain.get(i);
+            for(int k = 0; k < blk.getHeight(); k++){
+                if(blk.getTx(k).getTarget() == pubkey){
+                    bal+=blk.getTx(k).getValue();
+                }
+            }
+        }
+        return bal;
     }
 }

@@ -1,20 +1,23 @@
 package com.company;
 
+import com.company.blockchain.Chain;
+import com.company.blockchain.Transaction;
+import com.company.blockchain.Wallet;
 import com.company.crypto.EC;
 
 public class Main {
 
     public static void main(String[] args) {
+        Chain ch = new Chain();
+        Wallet wal = new Wallet();
 
-        EC curve = new EC();
+        System.out.println(wal.getPubKey());
+        System.out.println(wal.getPrivKey());
 
-        curve.gen();
-        String pub = curve.getPubKey();
-        String priv = curve.getPrivKey();
-        curve.calc();
+        ch.add_tx( new Transaction("",wal.getPubKey(),50)); // new transaction
 
-        System.out.println("public key:"+pub+"\n");
-        System.out.println("private key:"+priv+"\n");
-        System.out.println(curve.keyMatch());
+        ch.mine_block(wal.getPubKey()); // verify new transaction (add it to chain)
+
+        System.out.println(ch.getBalance(wal)); // new balance
     }
 }
