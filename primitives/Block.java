@@ -1,4 +1,4 @@
-package com.company.blockchain;
+package com.company.primitives;
 
 import com.company.crypto.SHA256;
 

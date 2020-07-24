@@ -1,9 +1,8 @@
 package com.company;
 
-import com.company.blockchain.Chain;
-import com.company.blockchain.Transaction;
-import com.company.blockchain.Wallet;
-import com.company.crypto.EC;
+import com.company.primitives.Chain;
+import com.company.primitives.Transaction;
+import com.company.primitives.Wallet;
 
 public class Main {
 
