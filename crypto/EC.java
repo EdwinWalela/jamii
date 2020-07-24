@@ -29,8 +29,8 @@ public class EC {
     String pubKey;
 
     public EC(){
-        // Get domain parameters for example curve secp256r1
-        ecp = SECNamedCurves.getByName("secp256r1");
+        // Get domain parameters for example curve secp256k1
+        ecp = SECNamedCurves.getByName("secp256k1");
         domainParams = new ECDomainParameters(ecp.getCurve(),
                 ecp.getG(), ecp.getN(), ecp.getH(),
                 ecp.getSeed());
