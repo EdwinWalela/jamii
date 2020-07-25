@@ -1,80 +1,86 @@
 package com.company.crypto;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 
-import org.bouncycastle.asn1.x9.X9ECParameters;
-import org.bouncycastle.asn1.sec.SECNamedCurves;
-import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-import org.bouncycastle.crypto.params.ECDomainParameters;
-import org.bouncycastle.crypto.params.ECKeyGenerationParameters;
-import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
-import org.bouncycastle.crypto.params.ECPublicKeyParameters;
-import org.bouncycastle.crypto.generators.ECKeyPairGenerator;
-import org.bouncycastle.math.ec.ECPoint;
 
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.security.spec.ECGenParameterSpec;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 public class EC {
-    X9ECParameters ecp;
-    ECDomainParameters domainParams;
-    AsymmetricCipherKeyPair keyPair;
-    ECKeyGenerationParameters keyGenParams;
-    ECKeyPairGenerator generator;
-    byte[] privateKeyBytes;
-    ECPoint Q;
 
-    ECPrivateKeyParameters privateKey;
-    ECPublicKeyParameters publicKey;
+    ECGenParameterSpec ecSpec;
+    KeyPairGenerator g;
+    KeyPair keypair;
+    PublicKey publicKey;
+    PrivateKey privateKey;
+    KeyFactory kf;
+    EncodedKeySpec publicKeySpec;
+    KeyFactory keyFactory;
+    Signature ecdsaVerify;
 
-    String privKey;
-    String pubKey;
+    public String pubKey;
+    public String privKey;
+    public String signature;
 
-    public EC(){
-        // Get domain parameters for example curve secp256k1
-        ecp = SECNamedCurves.getByName("secp256k1");
-        domainParams = new ECDomainParameters(ecp.getCurve(),
-                ecp.getG(), ecp.getN(), ecp.getH(),
-                ecp.getSeed());
-        keyGenParams = new ECKeyGenerationParameters(domainParams, new SecureRandom());
-        generator = new ECKeyPairGenerator();
+    Signature ecdsaSign;
 
+    public EC() {
 
     }
 
-    protected void gen() {
-        generator.init(keyGenParams);
-        keyPair = generator.generateKeyPair();
-        privateKey = (ECPrivateKeyParameters) keyPair.getPrivate();
-        publicKey = (ECPublicKeyParameters) keyPair.getPublic();
-        privateKeyBytes = privateKey.getD().toByteArray();
+    public void gen_pair() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        ecSpec = new ECGenParameterSpec("secp256k1");
+        g = KeyPairGenerator.getInstance("EC");
+        g.initialize(ecSpec, new SecureRandom());
+        keypair = g.generateKeyPair();
+        publicKey = keypair.getPublic();
+        privateKey = keypair.getPrivate();
 
-        pubKey = toHex(privateKeyBytes);
-        privKey = toHex(publicKey.getQ().getEncoded(true));
+        pubKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+        privKey = Base64.getEncoder().encodeToString(privateKey.getEncoded());
     }
 
-    protected String calc(){
-        // calculate the public key only using domainParams.getG() and private key
-        Q = domainParams.getG().multiply(new BigInteger(privateKeyBytes));
-        return toHex(Q.getEncoded(true));
+    public void  sign(String tx_hash) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, UnsupportedEncodingException {
+        ecdsaSign = Signature.getInstance("SHA256withECDSA");
+        ecdsaSign.initSign(privateKey);
+        ecdsaSign.update(tx_hash.getBytes("UTF-8"));
+        byte[] signature_bytes = ecdsaSign.sign();
+        signature = Base64.getEncoder().encodeToString(signature_bytes);
     }
 
-    protected boolean keyMatch(){
-        // The calculated public key and generated public key should always match
-        return (toHex(publicKey.getQ().getEncoded(true)).equals(toHex(Q.getEncoded(true))));
+    public boolean verify(String _pubkey,String _signature,String tx_hash) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException {
+        ecdsaVerify = Signature.getInstance("SHA256withECDSA");
+        kf = KeyFactory.getInstance("EC");
+        publicKeySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(_pubkey));
+
+        KeyFactory keyFactory = KeyFactory.getInstance("EC");
+        PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+
+        ecdsaVerify.initVerify(publicKey);
+        ecdsaVerify.update(tx_hash.getBytes("UTF-8"));
+        return ecdsaVerify.verify(Base64.getDecoder().decode(_signature));
     }
 
-    private static String toHex(byte[] data) {
+    public String getPubKeyHex(){
+        return toHex(pubKey.getBytes());
+    }
+
+    public String getPrivKeyHex(){
+        return toHex(privKey.getBytes());
+    }
+
+    public String getSignatureHex(){
+        return toHex(signature.getBytes());
+    }
+
+    private String toHex(byte[] data) {
         StringBuilder sb = new StringBuilder();
         for (byte b: data) {
             sb.append(String.format("%02x", b&0xff));
         }
         return sb.toString();
-    }
-
-    public String getPrivKey() {
-        return privKey;
-    }
-
-    public String getPubKey() {
-        return pubKey;
     }
 }

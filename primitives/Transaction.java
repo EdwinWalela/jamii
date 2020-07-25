@@ -22,6 +22,10 @@ public class Transaction {
         }
     }
 
+    public void sign(String key){
+
+    }
+
     public String getFrom(){
         return from;
     }

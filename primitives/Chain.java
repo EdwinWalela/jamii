@@ -56,16 +56,16 @@ public class Chain {
     }
 
     public double getBalance(Wallet wal){
-        String pubkey = wal.getPubKey();
+//        String pubkey = wal.getPubKey();
         double bal = 0;
-        for(int i = 0; i < chain.size(); i++){
-            Block blk = chain.get(i);
-            for(int k = 0; k < blk.getHeight(); k++){
-                if(blk.getTx(k).getTarget() == pubkey){
-                    bal+=blk.getTx(k).getValue();
-                }
-            }
-        }
+//        for(int i = 0; i < chain.size(); i++){
+//            Block blk = chain.get(i);
+//            for(int k = 0; k < blk.getHeight(); k++){
+//                if(blk.getTx(k).getTarget() == pubkey){
+//                    bal+=blk.getTx(k).getValue();
+//                }
+//            }
+//        }
         return bal;
     }
 }
