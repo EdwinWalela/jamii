@@ -12,27 +12,28 @@ import java.security.spec.InvalidKeySpecException;
 public class Main {
 
     public static void main(String[] args) throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException, SignatureException, InvalidKeySpecException, DecoderException {
-        Chain ch = new Chain();
-        Wallet wal1 = new Wallet();
+        Chain ch = new Chain(); // New chain instance
+        Wallet wal1 = new Wallet(); // Wallet instances
         Wallet wal2 = new Wallet();
 
-        String add1 = wal1.getPublicKeyHex();
-        String add2 = wal2.getPublicKeyHex();
+        String address1 = wal1.getPublicKeyHex(); // Retrieve wallet's address in HEX
+        String address2 = wal2.getPublicKeyHex();
 
-        Transaction tx1 = new Transaction(add1,add2,10);
-        Transaction tx2 = new Transaction(add1,add2,5.85);
+        Transaction tx1 = new Transaction(address1,address2,10); // Create transaction-
 
-        tx1.sign(wal1);
-        tx2.sign(wal1);
+        tx1.sign(wal1); // Transaction's initator signs the transaction
 
-        ch.add_tx(tx1);
-        ch.add_tx(tx2);
+        ch.add_tx(tx1); // Transaction sent to the chain
 
-        ch.mine_block(add1);
+        ch.mine_block(address1); // Verification of pending transactions
 
-        double bal = ch.getBalance(add1);
+        double bal = ch.getBalance(address2); // Query wallet's balance
 
-        System.out.println(bal);
+        System.out.println("Balance"+bal);
+
+        boolean valid = ch.isValid();
+
+        System.out.println("Chain valid?:"+valid); // Check chain's validity
 
     }
 }

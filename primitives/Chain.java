@@ -67,7 +67,7 @@ public class Chain {
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {
         for(int i = 0; i < chain.size()-1; i++){
 
-            if(!chain.get(i).hasValidTxs()){ // Check transactions' validity
+            if(!chain.get(i).hasValidTxs()){
                 return false;
             }
 

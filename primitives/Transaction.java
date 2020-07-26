@@ -43,9 +43,14 @@ public class Transaction {
     }
 
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {
+        if(from.length() == 0){ // Coinbase transactions are valid
+            return true;
+        }
+        if(signature.length() == 0) {
 
-        if(from == null){ return true; } // Coinbase transactions are valid
-        if(signature.length() == 0) { return false; } // transaction must be signed
+            return false;
+        }
+            // transaction must be signed
 
         EC ec = new EC();
 

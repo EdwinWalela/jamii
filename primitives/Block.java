@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Block {
-    private int DIFF = 5;
+    private int DIFF = 1;
     private long timestamp;
     private int nonce = 0;
     private int height;
