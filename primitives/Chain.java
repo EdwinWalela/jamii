@@ -1,5 +1,12 @@
 package com.company.primitives;
 
+import org.apache.commons.codec.DecoderException;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +27,16 @@ public class Chain {
         return blk;
     }
 
-    public void add_tx(Transaction _tx){
+    public void add_tx(Transaction _tx) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException, DecoderException {
+
+        if(_tx.getFrom().length() == 0 || _tx.getTarget().length() == 0 ){
+            throw new Error("From & Target address is required");
+        }
+
+        if(!_tx.isValid()){
+            throw new Error("Invalid transaction");
+        }
+
         pending_tx.add(_tx);
     }
 
@@ -30,7 +46,7 @@ public class Chain {
 
     public String mine_block(String miner_address){
         Block blk = new Block();
-        Transaction coinBase = new Transaction(miner_address,"",0);
+        Transaction coinBase = new Transaction(null,miner_address,0);
         if(pending_tx.size()>0){
             blk.addTx(coinBase);
             for(int i = 0; i < pending_tx.size(); i++) {
@@ -44,9 +60,14 @@ public class Chain {
         return blk.getHash();
     }
 
-    public boolean isValid(){
+    public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {
         for(int i = 0; i < chain.size()-1; i++){
-            if(chain.get(i+1).getPrev_hash() == chain.get(i).getHash()){
+
+            if(!chain.get(i).hasValidTxs()){ // Check transactions' validity
+                return false;
+            }
+
+            if(chain.get(i+1).getPrev_hash() == chain.get(i).getHash()){ // Check chains' integrity
                 continue;
             }else{
                 return false;
@@ -56,16 +77,16 @@ public class Chain {
     }
 
     public double getBalance(Wallet wal){
-//        String pubkey = wal.getPubKey();
+        String pubkey = wal.getPublicKeyHex();
         double bal = 0;
-//        for(int i = 0; i < chain.size(); i++){
-//            Block blk = chain.get(i);
-//            for(int k = 0; k < blk.getHeight(); k++){
-//                if(blk.getTx(k).getTarget() == pubkey){
-//                    bal+=blk.getTx(k).getValue();
-//                }
-//            }
-//        }
+        for(int i = 0; i < chain.size(); i++){
+            Block blk = chain.get(i);
+            for(int k = 0; k < blk.getHeight(); k++){
+                if(blk.getTx(k).getTarget().equals(pubkey)){
+                    bal+=blk.getTx(k).getValue();
+                }
+            }
+        }
         return bal;
     }
 }

@@ -1,8 +1,13 @@
 package com.company.primitives;
 
 import com.company.crypto.SHA256;
+import org.apache.commons.codec.DecoderException;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +19,19 @@ public class Block {
     private String prev_hash = "";
     private String hash = "";
     private String merkle_root = "";
-    private List<Transaction> tx;
+    private List<Transaction> txs;
 
     public Block(){
         height = 0;
         timestamp = System.currentTimeMillis();
-        tx = new ArrayList<>();
+        txs = new ArrayList<>();
     }
 
     public void hash(){
         String tx_hash = "";
 
-        for(int i = 0; i < tx.size(); i++){
-            tx_hash+=tx.get(i).getHash();
+        for(int i = 0; i < txs.size(); i++){
+            tx_hash+=txs.get(i).getHash();
         }
         try {
             do{
@@ -50,7 +55,7 @@ public class Block {
     }
 
     public void addTx(Transaction _tx){
-        tx.add(_tx);
+        txs.add(_tx);
         height++;
     }
 
@@ -79,12 +84,23 @@ public class Block {
     }
 
     public Transaction getTx(int index) {
-        return tx.get(index);
+        return txs.get(index);
     }
 
     public void setPrev_hash(String prev_hash) {
         this.prev_hash = prev_hash;
     }
+
+    public boolean hasValidTxs() throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException, DecoderException {
+        for (Transaction tx :
+                txs) {
+            if(!tx.isValid()) { // Check validity of all tx in the block
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 
 
