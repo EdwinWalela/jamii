@@ -37,6 +37,10 @@ public class Chain {
             throw new Error("Invalid transaction");
         }
 
+        if(getBalance(_tx.getFrom()) < _tx.getValue()){
+            throw new Error("Insufficient Balance");
+        }
+
         pending_tx.add(_tx);
     }
 
@@ -76,8 +80,7 @@ public class Chain {
         return true;
     }
 
-    public double getBalance(Wallet wal){
-        String pubkey = wal.getPublicKeyHex();
+    public double getBalance(String pubkey){
         double bal = 0;
         for(int i = 0; i < chain.size(); i++){
             Block blk = chain.get(i);

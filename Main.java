@@ -30,7 +30,7 @@ public class Main {
 
         ch.mine_block(add1);
 
-        double bal = ch.getBalance(wal2);
+        double bal = ch.getBalance(add1);
 
         System.out.println(bal);
 
