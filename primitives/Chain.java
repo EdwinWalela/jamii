@@ -51,17 +51,19 @@ public class Chain {
     public String mine_block(String miner_address){
         Block blk = new Block();
         Transaction coinBase = new Transaction(null,miner_address,0);
-        if(pending_tx.size()>0){
+        if(pending_tx.size()>0) {
             blk.addTx(coinBase);
-            for(int i = 0; i < pending_tx.size(); i++) {
+            for (int i = 0; i < pending_tx.size(); i++) {
                 blk.addTx(pending_tx.get(i));
             }
+            blk.setPrev_hash(latestBlock().getHash());
+            blk.hash();
+            chain.add(blk);
+            pending_tx.clear();
+            return blk.getHash();
+        }else{
+            throw new Error("No pending transactions");
         }
-        blk.setPrev_hash(latestBlock().getHash());
-        blk.hash();
-        chain.add(blk);
-        pending_tx.clear();
-        return blk.getHash();
     }
 
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {

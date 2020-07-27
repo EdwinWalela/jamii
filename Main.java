@@ -31,9 +31,9 @@ public class Main {
 
         System.out.println("Balance"+bal);
 
-        boolean valid = ch.isValid();
+        boolean valid = ch.isValid(); // Check chain's validity
 
-        System.out.println("Chain valid?:"+valid); // Check chain's validity
+        System.out.println("Chain valid?:"+valid);
 
     }
 }

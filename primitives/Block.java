@@ -84,6 +84,9 @@ public class Block {
     }
 
     public Transaction getTx(int index) {
+        if(index >= txs.size()) {
+         throw new Error("Transaction index out of range");
+        }
         return txs.get(index);
     }
 
