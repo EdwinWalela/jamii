@@ -22,7 +22,7 @@ public class Chain {
 
     public Block genesis(){
         Block blk = new Block();
-        blk.addTx(new Transaction("","",0));
+        blk.addTx(new Transaction("","4d465977454159484b6f5a497a6a3043415159464b34454541416f44516741456837314958797a306c75307333754a59304d4a44487a7370564a7a4f574c4c747568564d46506169672f3664566f4f37354e56324732746b376f695075376f43705338714d615879592b377868787632366b4e4a73673d3d",50));
         blk.hash();
         return blk;
     }
