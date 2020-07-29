@@ -1,5 +1,7 @@
 package com.company.primitives;
 
+import com.company.util.Values;
+import com.sun.jdi.Value;
 import org.apache.commons.codec.DecoderException;
 
 import java.io.UnsupportedEncodingException;
@@ -20,9 +22,9 @@ public class Chain {
         chain.add(genesis());
     }
 
-    public Block genesis(){
+    private Block genesis(){
         Block blk = new Block();
-        blk.addTx(new Transaction("","4d465977454159484b6f5a497a6a3043415159464b34454541416f44516741456837314958797a306c75307333754a59304d4a44487a7370564a7a4f574c4c747568564d46506169672f3664566f4f37354e56324732746b376f695075376f43705338714d615879592b377868787632366b4e4a73673d3d",50));
+        blk.addTx(new Transaction("", Values.GENESIS_ADDRESS, Values.GENESIS_VALUE));
         blk.hash();
         return blk;
     }
@@ -50,7 +52,7 @@ public class Chain {
 
     public String mine_block(String miner_address){
         Block blk = new Block();
-        Transaction coinBase = new Transaction(null,miner_address,0);
+        Transaction coinBase = new Transaction(null,miner_address,Values.MINER_REWARD);
         if(pending_tx.size()>0) {
             blk.addTx(coinBase);
             for (int i = 0; i < pending_tx.size(); i++) {
@@ -93,5 +95,9 @@ public class Chain {
             }
         }
         return bal;
+    }
+
+    public int getBlockHeight(){
+        return chain.size();
     }
 }

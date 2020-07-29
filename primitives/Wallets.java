@@ -11,8 +11,8 @@ import java.security.spec.InvalidKeySpecException;
 public class Wallets {
     Wallet[] wallets;
     public int BASE_WALLET = 0;
-    public int SENDING_WALLET = 0;
-    public int RECIEVEING_WALLET = 0;
+    public int SENDING_WALLET = 1;
+    public int RECIEVEING_WALLET = 2;
 
     public Wallets(String seed) throws InvalidKeySpecException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, IOException {
         // Wallet instances ( b - base wallet, s - sending wallet, r - receiving wallet )

@@ -1,6 +1,7 @@
 package com.company.primitives;
 
 import com.company.crypto.SHA256;
+import com.company.util.Values;
 import org.apache.commons.codec.DecoderException;
 
 import java.io.UnsupportedEncodingException;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Block {
-    private int DIFF = 1;
+    private int DIFF = Values.DIFFICULTY;
     private long timestamp;
     private int nonce = 0;
     private int height;
