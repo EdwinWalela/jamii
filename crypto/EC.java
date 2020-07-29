@@ -12,6 +12,8 @@ import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemObjectGenerator;
 import org.bouncycastle.util.io.pem.PemWriter;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 import java.io.*;
 import java.security.*;
 import java.security.spec.*;
@@ -41,10 +43,12 @@ public class EC {
 
     }
 
-    protected void gen_pair() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+    protected void gen_pair(String seed) throws NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+        seed = SHA256.hash(seed);
         ecSpec = new ECGenParameterSpec("secp256k1");
         g = KeyPairGenerator.getInstance("EC");
         SecureRandom rn = new SecureRandom();
+        rn.setSeed(seed.getBytes());
         g.initialize(ecSpec,rn);
         keypair = g.generateKeyPair();
 
@@ -102,27 +106,7 @@ public class EC {
         return Base64.getEncoder().encodeToString(privateKey.getEncoded());
     }
 
-    protected void writeToFile() throws Exception {
-        FileWriter f = new FileWriter(".privkey");
-        f.write(getPrivateKey64());
-        f.close();
-    }
-
-    protected void readFromFile1(String filename) throws IOException, InvalidKeySpecException, NoSuchAlgorithmException {
-        File myObj = new File(filename);
-        Scanner myReader = new Scanner(myObj);
-        String key = myReader.nextLine();
-        myReader.close();
-        byte[] decoded = Base64.getDecoder().decode(key);
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decoded);
-        KeyFactory kf = KeyFactory.getInstance("EC");
-        this.privateKey = kf.generatePrivate(spec);
-        this.publicKey = kf.generatePublic(spec);
-
-
-    }
-
-    protected void readFromFile(){
+    public void readFromFile1(){
 
     }
 

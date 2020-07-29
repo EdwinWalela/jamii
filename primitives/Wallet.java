@@ -10,12 +10,8 @@ import java.security.spec.InvalidKeySpecException;
 public class Wallet extends EC {
     private double balance;
 
-    public Wallet(boolean existing_key,String path) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, InvalidAlgorithmParameterException {
-        if(existing_key){
-            readFromFile();
-        }else{
-            gen_pair();
-        }
+    public Wallet(String seed) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, InvalidAlgorithmParameterException {
+       gen_pair(seed);
     }
 
     public void setBalance(double balance) {
