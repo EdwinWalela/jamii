@@ -12,6 +12,7 @@ public class Wallet extends EC {
 
     public Wallet(String seed) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, InvalidAlgorithmParameterException {
        gen_pair(seed);
+
     }
 
     public void setBalance(double balance) {

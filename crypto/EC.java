@@ -1,25 +1,11 @@
 package com.company.crypto;
 
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-import org.bouncycastle.asn1.ASN1Object;
-import org.bouncycastle.asn1.ASN1Sequence;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
-import org.bouncycastle.util.encoders.HexEncoder;
-import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemObjectGenerator;
-import org.bouncycastle.util.io.pem.PemWriter;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import java.io.*;
 import java.security.*;
 import java.security.spec.*;
 import java.util.Base64;
-import java.util.Scanner;
-
 public class EC {
 
     ECGenParameterSpec ecSpec;
