@@ -16,14 +16,14 @@ public class Block {
     private int DIFF = Values.DIFFICULTY;
     private long timestamp;
     private int nonce = 0;
-    private int height;
+    private int volume;
     private String prev_hash = "";
     private String hash = "";
     private String merkle_root = "";
     private List<Transaction> txs;
 
     public Block(){
-        height = 0;
+        volume = 0;
         timestamp = System.currentTimeMillis();
         txs = new ArrayList<>();
     }
@@ -57,15 +57,15 @@ public class Block {
 
     public void addTx(Transaction _tx){
         txs.add(_tx);
-        height++;
+        volume++;
     }
 
     public String getHash() {
         return hash;
     }
 
-    public int getHeight() {
-        return height;
+    public int getVolume() {
+        return volume;
     }
 
     public int getNonce() {

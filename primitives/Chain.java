@@ -24,7 +24,7 @@ public class Chain {
 
     private Block genesis(){
         Block blk = new Block();
-        blk.addTx(new Transaction("", Values.GENESIS_ADDRESS, Values.GENESIS_VALUE));
+        blk.addTx(new Transaction(null, Values.GENESIS_ADDRESS, Values.GENESIS_VALUE));
         blk.hash();
         return blk;
     }
@@ -71,7 +71,7 @@ public class Chain {
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {
         for(int i = 0; i < chain.size()-1; i++){
 
-            if(!chain.get(i).hasValidTxs()){
+            if(!chain.get(i).hasValidTxs() || !chain.get(i+1).hasValidTxs()){
                 return false;
             }
 
@@ -88,7 +88,7 @@ public class Chain {
         double bal = 0;
         for(int i = 0; i < chain.size(); i++){
             Block blk = chain.get(i);
-            for(int k = 0; k < blk.getHeight(); k++){
+            for(int k = 0; k < blk.getVolume(); k++){
                 if(blk.getTx(k).getTarget().equals(pubkey)){
                     bal+=blk.getTx(k).getValue();
                 }

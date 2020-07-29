@@ -12,8 +12,8 @@ import java.security.spec.InvalidKeySpecException;
 // Defines a transaction object
 
 public class Transaction {
-    private String from;
-    private String target;
+    private String from = "";
+    private String target = "";
     private double value;
     private String hash;
     private String signature;
@@ -43,11 +43,14 @@ public class Transaction {
     }
 
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {
+
+        if(from == null){
+            return true;
+        }
         if(from.length() == 0){ // Coinbase transactions are valid
             return true;
         }
         if(signature.length() == 0) {
-
             return false;
         }
             // transaction must be signed
