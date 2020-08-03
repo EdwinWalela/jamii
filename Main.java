@@ -35,23 +35,24 @@ public class Main {
             To create a transaction, the sender's and recipient's public keys are required,
             plus the amount to be transferred
         */
-        Transaction tx = new Transaction(base_wall_pubKey,"random address",5);
+        for(int i = 0; i < 5; i++) {
+            Transaction tx = new Transaction(base_wall_pubKey, "random address", 5);
         /*
             To ensure that the transaction is being initiated by the actual wallet owner,
             it needs to be signed using the private key of the wallet which contains the funds
         */
-        tx.sign(my_wallets.getWallet(my_wallets.BASE_WALLET));
+            tx.sign(my_wallets.getWallet(my_wallets.BASE_WALLET));
         /*
             New transactions submitted to the blockchain are treated as pending transactions
         */
 
-        ch.add_tx(tx);
+            ch.add_tx(tx);
         /*
             Mining (proof of work) verifies and bundles all pending transactions into a block
             Miner's public key is provided incase of mining rewards
         */
-        ch.mine_block(base_wall_pubKey);
-
+            ch.mine_block(base_wall_pubKey);
+        }
     }
 
 }
