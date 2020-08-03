@@ -74,6 +74,10 @@ public class Transaction {
         return target;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
     public String getHash(){
         return hash;
     }

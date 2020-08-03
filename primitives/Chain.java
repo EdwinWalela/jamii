@@ -1,9 +1,11 @@
 package com.company.primitives;
 
+import com.company.util.FileWriter;
 import com.company.util.Values;
 import com.sun.jdi.Value;
 import org.apache.commons.codec.DecoderException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -50,7 +52,7 @@ public class Chain {
         return chain.get(chain.size()-1);
     }
 
-    public String mine_block(String miner_address){
+    public String mine_block(String miner_address) throws IOException {
         Block blk = new Block();
         Transaction coinBase = new Transaction(null,miner_address,Values.MINER_REWARD);
         if(pending_tx.size()>0) {
@@ -62,10 +64,11 @@ public class Chain {
             blk.hash();
             chain.add(blk);
             pending_tx.clear();
-            return blk.getHash();
         }else{
             throw new Error("No pending transactions");
         }
+        FileWriter.writeJSON(blk);
+        return blk.getHash();
     }
 
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {

@@ -16,25 +16,7 @@ public class Main {
         Wallets my_wallets = new Wallets("edwin");
 
         String base_wall_pubKey = my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex();
-        String base_wall_privKey = my_wallets.getWallet(my_wallets.BASE_WALLET).getPrivateKeyHex();
 
-        String sending_wall_pubKey = my_wallets.getWallet(my_wallets.SENDING_WALLET).getPublicKeyHex();
-        String sending_wall_privKey = my_wallets.getWallet(my_wallets.SENDING_WALLET).getPrivateKeyHex();
-
-        String recieving_wall_pubKey = my_wallets.getWallet(my_wallets.RECIEVEING_WALLET).getPublicKeyHex();
-        String recieving_wall_privKey = my_wallets.getWallet(my_wallets.RECIEVEING_WALLET).getPrivateKeyHex();
-
-        System.out.println("-------------------------------"+
-                "\nbase wallet keypair:\n" +
-                "private: "+base_wall_privKey+"\n" +
-                "public: "+base_wall_pubKey+"\n");
-        System.out.println("sending wallet keypair:\n" +
-                "private: "+sending_wall_privKey+"\n" +
-                "public: "+sending_wall_pubKey+"\n");
-        System.out.println("receiving wallet keypair:\n" +
-                "private: "+recieving_wall_privKey+"\n" +
-                "public: "+recieving_wall_pubKey+"\n" +
-                "-------------------------------\n");
         /*
             The use of 3 wallets per user improves anonymity
         */
@@ -45,40 +27,9 @@ public class Main {
 
         System.out.println("Current block height: "+blockHeight); // Height = number of blocks in the blockchain
 
-        Block genesis = ch.latestBlock(); // First block in the chain
-
-        /*
-            Retrieve genesis block's contents
-        */
-
-        int nonce = genesis.getNonce();
-        String hash = genesis.getHash();
-        boolean valid_Tx = genesis.hasValidTxs();
-        String to = genesis.getTx(0).getTarget();
-        int volume = genesis.getVolume();
-        double value = genesis.getTx(0).getValue();
-
         /*
             Genesis (First) Transactions includes a hardcoded transaction of 50 coins to a predefined address
         */
-        System.out.println("---------------------------\n" +
-                "Genesis block contents\n" +
-                "nonce: "+nonce+"\n" +
-                "hash: "+hash+"\n" +
-                "tx_valid: "+valid_Tx+"\n" +
-                "to_address: "+to+"\n" +
-                "height: "+volume+"\n" +
-                "value: "+value+"\n" +
-                "---------------------------\n");
-
-        double base_balance = ch.getBalance(base_wall_pubKey);
-        double sending_balance = ch.getBalance(sending_wall_pubKey);
-        double receiving_balance = ch.getBalance(recieving_wall_pubKey);
-
-        System.out.println("My wallets balance\n" +
-                "base (primary): "+base_balance+"\n" +
-                "sending (secondary): "+sending_balance+"\n" +
-                "receiving (secondary): "+ receiving_balance+"\n");
 
         /*
             To create a transaction, the sender's and recipient's public keys are required,
@@ -95,32 +46,11 @@ public class Main {
         */
 
         ch.add_tx(tx);
-
         /*
             Mining (proof of work) verifies and bundles all pending transactions into a block
             Miner's public key is provided incase of mining rewards
         */
         ch.mine_block(base_wall_pubKey);
-
-        Block latest = ch.latestBlock();
-        nonce = latest.getNonce();
-        hash = latest.getHash();
-        valid_Tx = latest.hasValidTxs();
-        to = latest.getTx(0).getTarget();
-        volume = latest.getVolume();
-        value = latest.getTx(0).getValue();
-
-        System.out.println("---------------------------\n" +
-                "Block contents\n" +
-                "nonce: "+nonce+"\n" +
-                "hash: "+hash+"\n" +
-                "tx_valid: "+valid_Tx+"\n" +
-                "to_address: "+to+"\n" +
-                "height: "+volume+"\n" +
-                "value: "+value+"\n" +
-                "---------------------------\n");
-
-        FileWriter.writeJSON(latest);
 
     }
 
