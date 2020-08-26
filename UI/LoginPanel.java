@@ -17,7 +17,6 @@ public class LoginPanel extends JPanel {
     JButton submit_btn = new JButton("Unlock Wallet");
 
     public LoginPanel(){
-
         Font font = new Font("San Serif",Font.PLAIN,18);
 
         username_label.setBounds(50,50,100,30);
@@ -31,13 +30,6 @@ public class LoginPanel extends JPanel {
         phrase_label.setFont(font);
         submit_btn.setBounds(200,250,300,40);
 
-        submit_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSubmitClick();
-            }
-        });
-
         add(username_label);
         add(username_input);
         add(phrase_label);
@@ -49,14 +41,4 @@ public class LoginPanel extends JPanel {
 
     }
 
-    public void onSubmitClick(){
-        try{
-            String username = username_input.getText();
-            char[] passphrase = phrase_input.getPassword();
-            System.out.println(passphrase);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }
