@@ -40,7 +40,9 @@ public class IndexFrame extends JFrame{
         try{
             String username = login.username_input.getText();
             char[] passphrase = login.phrase_input.getPassword();
+
             card.show(getContentPane(),"client");
+
         }catch (Exception ex){
             ex.printStackTrace();
         }

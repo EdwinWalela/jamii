@@ -32,6 +32,7 @@ public class WalletPanel extends JPanel {
         send_label.setBounds(50,100,100,30);
         send_amount.setBounds(200,100,100,30);
         send_addr.setBounds(50,150,300,100);
+        send_addr.setLineWrap(true);
         send_addr.setFont(font);
         send_label.setFont(font);
         send_amount.setFont(font);
@@ -44,6 +45,7 @@ public class WalletPanel extends JPanel {
         receive_addr.setBounds(50,400,300,100);
         receive_label.setFont(font);
         receive_addr.setFont(font);
+        receive_addr.setLineWrap(true);
 
         send_btn.addActionListener(new ActionListener() {
             @Override
