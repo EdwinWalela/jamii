@@ -60,7 +60,7 @@ public class WalletPanel extends JPanel {
         add(send_btn);
         add(receive_label);
         add(receive_addr);
-        setSize(700,600);
+        setBorder(new TitledBorder(new LineBorder(Color.lightGray,2),"My Wallet"));
         setLayout(null);
         setVisible(true);
     }
