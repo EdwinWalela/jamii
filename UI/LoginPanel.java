@@ -29,8 +29,8 @@ public class LoginPanel extends JPanel {
         phrase_input.setBounds(200,150,300,30);
         phrase_input.setFont(font);
         phrase_label.setFont(font);
-
         submit_btn.setBounds(200,250,300,40);
+
         submit_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,7 +53,6 @@ public class LoginPanel extends JPanel {
         try{
             String username = username_input.getText();
             char[] passphrase = phrase_input.getPassword();
-
             System.out.println(passphrase);
 
         }catch (Exception e){
