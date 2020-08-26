@@ -55,7 +55,6 @@ public class Main {
 //            Miner's public key is provided incase of mining rewards
 //        */
 //            ch.mine_block(base_wall_pubKey);
-
         IndexFrame index = new IndexFrame();
 
     }
