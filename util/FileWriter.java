@@ -40,7 +40,6 @@ public class FileWriter {
             tx_obj.put("signature",tx.getSignature());
 
             txs.add(tx_obj);
-
         }
 
         blockObj.put("transactions",txs);

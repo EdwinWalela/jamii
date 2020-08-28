@@ -56,7 +56,6 @@ public class Main {
 //        */
 //            ch.mine_block(base_wall_pubKey);
         IndexFrame index = new IndexFrame();
-        FileWriter.initNode();
 
     }
 

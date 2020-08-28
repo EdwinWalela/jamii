@@ -103,4 +103,8 @@ public class Chain {
     public int getBlockHeight(){
         return chain.size();
     }
+
+    public List<Transaction> getPending_tx(){
+        return pending_tx;
+    }
 }

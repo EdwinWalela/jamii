@@ -3,11 +3,17 @@ package com.company.UI;
 import com.company.crypto.SHA256;
 import com.company.primitives.Chain;
 import com.company.primitives.Wallets;
+import org.apache.commons.codec.DecoderException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.EventListener;
 
 public class IndexFrame extends JFrame{
@@ -48,7 +54,8 @@ public class IndexFrame extends JFrame{
             String username = login.username_input.getText();
             char[] passphrase = login.phrase_input.getPassword();
 
-            String wallet_seed = SHA256.hash(username+passphrase);
+            String wallet_seed = SHA256.hash(username+new String(passphrase));
+
 
             wallets = new Wallets(wallet_seed);
             client.initWallets(wallets);

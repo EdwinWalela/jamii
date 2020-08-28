@@ -1,6 +1,8 @@
 package com.company.UI;
 
+import com.company.primitives.Chain;
 import com.company.primitives.Wallets;
+import com.company.util.FileWriter;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -10,9 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WalletPanel extends JPanel {
+    double balance = 0;
     Wallets my_wallets;
     JLabel bal_label = new JLabel("Wallet Balance:");
-    JLabel bal_value = new JLabel("0 Coins");
+    JLabel bal_value = new JLabel(balance+" Coins");
     JLabel send_label = new JLabel("Send:");
     JTextArea send_amount = new JTextArea("0");
     JTextArea send_addr = new JTextArea("");
@@ -63,8 +66,15 @@ public class WalletPanel extends JPanel {
         setVisible(true);
     }
 
-    public void initWallets(Wallets wallets){
+    public void initWallets(Wallets wallets,Chain _jamii){
+        FileWriter.initNode(); // Create Blocks directory
         my_wallets = wallets;
-        receive_addr.setText(wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex());
+        receive_addr.setText(my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex());
+
+        balance = _jamii.getBalance(my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex());
+        bal_value.setText(balance+" Coins");
+        revalidate();
+        repaint();
+
     }
 }
