@@ -10,6 +10,16 @@ import java.io.IOException;
 
 
 public class FileWriter {
+
+    public static void initNode(){
+        // Create Blocks directory
+        String PATH = Values.BLOCK_DIR;
+        File directory = new File(PATH);
+        if(!directory.exists()) {
+            directory.mkdir();
+        }
+    }
+
     public static void writeJSON(Block block) throws IOException {
         JSONObject blockObj = new JSONObject();
         blockObj.put("timestamp",block.getTimestamp());

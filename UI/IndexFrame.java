@@ -38,11 +38,12 @@ public class IndexFrame extends JFrame{
         setTitle("Jamii");
         setSize(890,650);
         setVisible(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 
-    public void onSubmitClick( ){
+    public void onSubmitClick(){
         try{
             String username = login.username_input.getText();
             char[] passphrase = login.phrase_input.getPassword();
