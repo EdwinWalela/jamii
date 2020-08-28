@@ -47,7 +47,7 @@ public class PendingTxPanel extends JPanel {
     }
 
 
-    private void buildTxList(){
+    public void buildTxList(){
         int size = pendingTxs.size();
         int y = 20;
         for(int i = 0; i<size; i++){

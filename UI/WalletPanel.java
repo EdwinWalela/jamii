@@ -1,8 +1,10 @@
 package com.company.UI;
 
 import com.company.primitives.Chain;
+import com.company.primitives.Transaction;
 import com.company.primitives.Wallets;
 import com.company.util.FileWriter;
+import org.apache.commons.codec.DecoderException;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -10,6 +12,11 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
 
 public class WalletPanel extends JPanel {
     double balance = 0;
@@ -47,13 +54,6 @@ public class WalletPanel extends JPanel {
         receive_addr.setFont(address_font);
         receive_addr.setLineWrap(true);
 
-        send_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         add(bal_label);
         add(bal_value);
         add(send_label);
@@ -76,5 +76,28 @@ public class WalletPanel extends JPanel {
         revalidate();
         repaint();
 
+    }
+
+    public void initTransaction(Chain _jamii){
+        String from = my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex();
+        String to = send_addr.getText();
+        Double value = Double.valueOf(send_amount.getText());
+        Transaction tx = new Transaction(from,to,value);
+        try {
+            tx.sign(my_wallets.getWallet(my_wallets.BASE_WALLET));
+            _jamii.add_tx(tx);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (DecoderException e) {
+            e.printStackTrace();
+        }
     }
 }

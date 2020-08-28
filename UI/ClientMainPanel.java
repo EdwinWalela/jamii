@@ -7,6 +7,8 @@ import org.apache.commons.codec.DecoderException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,13 @@ public class ClientMainPanel extends JPanel {
         pastTransactions.setBounds(450,10,400,290);
         pendingTxs.setBounds(450,310,400,300);
 
+        wallet.send_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                initTransaction();
+            }
+        });
+
         add(wallet);
         add(pastTransactions);
         add(pendingTxs);
@@ -36,6 +45,10 @@ public class ClientMainPanel extends JPanel {
 
         setSize(890,600);
         setVisible(true);
+    }
+
+    public void initTransaction(){
+        wallet.initTransaction(jamii);
     }
 
     public void initWallets(Wallets _wallets){
