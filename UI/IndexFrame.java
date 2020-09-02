@@ -56,7 +56,6 @@ public class IndexFrame extends JFrame{
 
             String wallet_seed = SHA256.hash(username+new String(passphrase));
 
-
             wallets = new Wallets(wallet_seed);
             client.initWallets(wallets);
 

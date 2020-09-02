@@ -19,6 +19,7 @@ public class PendingTxPanel extends JPanel {
     JLabel signatureHeader = new JLabel("Signature");
 
     JButton mineBtn = new JButton("Verify Pending Transactions");
+    JButton refreshBtn = new JButton("R");
 
     public PendingTxPanel(List<Transaction> _pendingTxs){
         pendingTxs = _pendingTxs;
@@ -28,8 +29,10 @@ public class PendingTxPanel extends JPanel {
         toHeader.setBounds(160, 0, 100,100);
         signatureHeader.setBounds(300,0,100,100);
         mineBtn.setBounds(110,250,200,30);
+        refreshBtn.setBounds(320,250,50,30);
 
         mineBtn.setFont(font);
+        refreshBtn.setFont(font);
         fromHeader.setFont(font);
         toHeader.setFont(font);
         signatureHeader.setFont(font);
@@ -38,14 +41,17 @@ public class PendingTxPanel extends JPanel {
         add(toHeader);
         add(signatureHeader);
         add(mineBtn);
+        add(refreshBtn);
 
-        buildTxList();
 
         setBorder(new TitledBorder(new LineBorder(Color.lightGray,2),"Pending Votes"));
         setLayout(null);
         setVisible(true);
     }
 
+    public void updateTx(List<Transaction> _tx){
+        pendingTxs = _tx;
+    }
 
     public void buildTxList(){
         int size = pendingTxs.size();
@@ -53,19 +59,32 @@ public class PendingTxPanel extends JPanel {
         for(int i = 0; i<size; i++){
             Transaction tx = pendingTxs.get(i);
 
-            JLabel from = new JLabel(tx.getFrom());
-            JLabel to = new JLabel(tx.getTarget());
+            String fromAddress = tx.getFrom();
+            String toAddress = tx.getTarget();
+
+            String fromHead = fromAddress.substring(0,3);
+            String fromTail = fromAddress.substring(fromAddress.length()-3,fromAddress.length());
+
+            String toHead = toAddress.substring(0,3);
+            String toTail = toAddress.substring(toAddress.length()-3,toAddress.length());
+
+            JLabel from = new JLabel(fromHead+"..."+fromTail);
+            JLabel to = new JLabel(toHead+"..."+toTail);
             JLabel signature = new JLabel(tx.getSignature());
 
-            from.setBounds(20,y+50,100,50);
-            to.setBounds(160, y+50 , 100,50);
-            signature.setBounds(300,y+50,100,50);
+
+
+            from.setBounds(20,y+50,60,50);
+            to.setBounds(140, y+50 , 60,50);
+            signature.setBounds(260,y+50,60,50);
 
             add(from);
             add(to);
             add(signature);
             y+=20;
         }
+        revalidate();
+        repaint();
     }
 
 }

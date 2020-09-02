@@ -19,17 +19,17 @@ public class ClientMainPanel extends JPanel {
     Chain jamii;
     WalletPanel wallet;
     PastTransactions pastTransactions;
-    PendingTxPanel pendingTxs;
+    PendingTxPanel pendingTxsPanel;
 
     public ClientMainPanel(){
         jamii = new Chain();
         wallet = new WalletPanel();
         pastTransactions = new PastTransactions();
-        pendingTxs = new PendingTxPanel(jamii.getPending_tx());
+        pendingTxsPanel = new PendingTxPanel(jamii.getPending_tx());
 
         wallet.setBounds(20,10,400,600);
         pastTransactions.setBounds(450,10,400,290);
-        pendingTxs.setBounds(450,310,400,300);
+        pendingTxsPanel.setBounds(450,310,400,300);
 
         wallet.send_btn.addActionListener(new ActionListener() {
             @Override
@@ -38,9 +38,17 @@ public class ClientMainPanel extends JPanel {
             }
         });
 
+        pendingTxsPanel.refreshBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pendingTxsPanel.updateTx(jamii.getPending_tx());
+                pendingTxsPanel.buildTxList();
+            }
+        });
+
         add(wallet);
         add(pastTransactions);
-        add(pendingTxs);
+        add(pendingTxsPanel);
         setLayout(null);
 
         setSize(890,600);
