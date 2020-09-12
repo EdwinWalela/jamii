@@ -20,15 +20,15 @@ public class LoginPanel extends JPanel {
         Font font = new Font("San Serif",Font.PLAIN,18);
 
         username_label.setBounds(50,50,100,30);
-        username_input.setBounds(200,50,300,30);
+        username_input.setBounds(170,50,200,30);
         username_input.setFont(font);
         username_label.setFont(font);
 
         phrase_label.setBounds(50,150,100,30);
-        phrase_input.setBounds(200,150,300,30);
+        phrase_input.setBounds(170,150,200,30);
         phrase_input.setFont(font);
         phrase_label.setFont(font);
-        submit_btn.setBounds(200,250,300,40);
+        submit_btn.setBounds(100,250,200,40);
 
         add(username_label);
         add(username_input);
