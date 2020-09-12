@@ -19,7 +19,7 @@ public class PendingTxPanel extends JPanel {
     JLabel signatureHeader = new JLabel("Signature");
 
     JButton mineBtn = new JButton("Verify Pending Transactions");
-    JButton refreshBtn = new JButton("R");
+    JButton refreshBtn = new JButton("Refresh");
 
     public PendingTxPanel(List<Transaction> _pendingTxs){
         pendingTxs = _pendingTxs;
@@ -28,8 +28,8 @@ public class PendingTxPanel extends JPanel {
         fromHeader.setBounds(20,0,100,100);
         toHeader.setBounds(160, 0, 100,100);
         signatureHeader.setBounds(300,0,100,100);
-        mineBtn.setBounds(110,250,200,30);
-        refreshBtn.setBounds(320,250,50,30);
+        mineBtn.setBounds(50,520,200,30);
+        refreshBtn.setBounds(270,520,80,30);
 
         mineBtn.setFont(font);
         refreshBtn.setFont(font);
