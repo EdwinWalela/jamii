@@ -21,15 +21,14 @@ public class PendingTxPanel extends JPanel {
         pendingTxs = _pendingTxs;
         Font font = new Font("San Serif",Font.PLAIN,13);
 
-        mineBtn.setBounds(50,520,200,30);
-        refreshBtn.setBounds(270,520,80,30);
+        mineBtn.setBounds(50,475,200,30);
+        refreshBtn.setBounds(270,475,80,30);
 
         mineBtn.setFont(font);
         refreshBtn.setFont(font);
 
         add(mineBtn);
         add(refreshBtn);
-
 
         setBorder(new TitledBorder(new LineBorder(Color.lightGray,2),"Pending Transactions"));
         setLayout(null);

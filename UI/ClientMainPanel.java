@@ -32,8 +32,8 @@ public class ClientMainPanel extends JPanel {
         pastTransactions = new PastTransactions();
         pendingTxsPanel = new PendingTxPanel(jamii.getPending_tx());
 
-        tabbedPane.setBounds(20,10,400,600);
-        wallet.setBounds(20,10,400,600);
+        tabbedPane.setBounds(20,10,400,570);
+        wallet.setBounds(20,10,400,550);
         pastTransactions.setBounds(450,10,400,290);
         pendingTxsPanel.setBounds(450,310,400,300);
 
@@ -49,6 +49,7 @@ public class ClientMainPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 pendingTxsPanel.updateTx(jamii.getPending_tx());
                 pendingTxsPanel.buildTxList();
+
             }
         });
 
@@ -70,7 +71,7 @@ public class ClientMainPanel extends JPanel {
         add(tabbedPane);
         setLayout(null);
 
-        setSize(890,600);
+        setSize(890,610);
         setVisible(true);
     }
 
