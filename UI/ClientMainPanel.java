@@ -2,6 +2,7 @@ package com.company.UI;
 
 import com.company.primitives.Chain;
 import com.company.primitives.Transaction;
+import com.company.primitives.Wallet;
 import com.company.primitives.Wallets;
 import org.apache.commons.codec.DecoderException;
 
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +20,7 @@ import java.security.spec.InvalidKeySpecException;
 public class ClientMainPanel extends JPanel {
     Chain jamii;
     WalletPanel wallet;
+    Wallets wallets;
     PastTransactions pastTransactions;
     PendingTxPanel pendingTxsPanel;
     JTabbedPane tabbedPane;
@@ -49,12 +52,22 @@ public class ClientMainPanel extends JPanel {
             }
         });
 
+        pendingTxsPanel.mineBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
+                try {
+                    jamii.mine_block(miner_address);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+
         tabbedPane.add("Wallet",wallet);
         tabbedPane.add("History",pastTransactions);
         tabbedPane.add("Pending",pendingTxsPanel);
         add(tabbedPane);
-//        add(pastTransactions);
-//        add(pendingTxsPanel);
         setLayout(null);
 
         setSize(890,600);
@@ -66,6 +79,7 @@ public class ClientMainPanel extends JPanel {
     }
 
     public void initWallets(Wallets _wallets){
+        wallets = _wallets;
         wallet.initWallets(_wallets,jamii);
     }
 
