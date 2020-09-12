@@ -34,13 +34,13 @@ public class WalletPanel extends JPanel {
         Font address_font = new Font("San Serif",Font.PLAIN,13);
 
         bal_label.setBounds(20,50,150,30);
-        bal_value.setBounds(200,50,300,30);
+        bal_value.setBounds(150,50,300,30);
         bal_label.setFont(font);
         bal_value.setFont(font);
 
         send_label.setBounds(20,100,100,30);
-        send_amount.setBounds(200,100,100,30);
-        send_addr.setBounds(20,150,350,150);
+        send_amount.setBounds(150,100,100,30);
+        send_addr.setBounds(20,150,355,150);
         send_addr.setLineWrap(true);
         send_addr.setFont(address_font);
         send_label.setFont(font);
@@ -48,9 +48,9 @@ public class WalletPanel extends JPanel {
 
         send_addr.setBorder(new TitledBorder(new LineBorder(Color.lightGray,2),"Target address"));
         receive_addr.setBorder(new TitledBorder(new LineBorder(Color.lightGray,2),"My address"));
-        send_btn.setBounds(20,310,350,30);
+        send_btn.setBounds(20,310,355,30);
 
-        receive_addr.setBounds(20,365,350,150);
+        receive_addr.setBounds(20,365,355,150);
         receive_addr.setFont(address_font);
         receive_addr.setLineWrap(true);
 
