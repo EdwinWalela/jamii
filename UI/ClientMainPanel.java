@@ -20,13 +20,16 @@ public class ClientMainPanel extends JPanel {
     WalletPanel wallet;
     PastTransactions pastTransactions;
     PendingTxPanel pendingTxsPanel;
+    JTabbedPane tabbedPane;
 
     public ClientMainPanel(){
         jamii = new Chain();
         wallet = new WalletPanel();
+        tabbedPane = new JTabbedPane();
         pastTransactions = new PastTransactions();
         pendingTxsPanel = new PendingTxPanel(jamii.getPending_tx());
 
+        tabbedPane.setBounds(20,10,400,600);
         wallet.setBounds(20,10,400,600);
         pastTransactions.setBounds(450,10,400,290);
         pendingTxsPanel.setBounds(450,310,400,300);
@@ -46,9 +49,12 @@ public class ClientMainPanel extends JPanel {
             }
         });
 
-        add(wallet);
-        add(pastTransactions);
-        add(pendingTxsPanel);
+        tabbedPane.add("Wallet",wallet);
+        tabbedPane.add("History",pastTransactions);
+        tabbedPane.add("Pending",pendingTxsPanel);
+        add(tabbedPane);
+//        add(pastTransactions);
+//        add(pendingTxsPanel);
         setLayout(null);
 
         setSize(890,600);
