@@ -58,13 +58,10 @@ public class ClientMainPanel extends JPanel {
                     status.setText("Status: Transaction sent");
                     status.setBackground(Values.SUCCESS_STATUS_BACKGROUND);
                 }catch(Exception ex){
-                    System.out.println("message : "+ex.getMessage());
-                    status.setBackground(Values.ERROR_STATUS_BACKGROUND);
-                    status.setText("Status: Failed to create transaction");
+                    // TODO:
                 }catch(Error er){
-                    System.out.println("message : "+er.getMessage());
                     status.setBackground(Values.ERROR_STATUS_BACKGROUND);
-                    status.setText("Status: Failed to create transaction");
+                    status.setText("Status: "+er.getMessage());
                 }
             }
         });
@@ -83,7 +80,9 @@ public class ClientMainPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
                 try {
-                    jamii.mine_block(miner_address);
+                    String hash = jamii.mine_block(miner_address);
+                    status.setBackground(Values.SUCCESS_STATUS_BACKGROUND);
+                    status.setText("Block mined ["+hash+"]");
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -103,7 +102,7 @@ public class ClientMainPanel extends JPanel {
     }
 
     public void initTransaction() throws DecoderException, NoSuchAlgorithmException, UnsupportedEncodingException, SignatureException, InvalidKeyException, InvalidKeySpecException {
-        wallet.initTransaction(jamii);;
+        wallet.initTransaction(jamii);
     }
 
     public void initWallets(Wallets _wallets){
