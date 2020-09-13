@@ -78,26 +78,12 @@ public class WalletPanel extends JPanel {
 
     }
 
-    public void initTransaction(Chain _jamii){
+    public void initTransaction(Chain _jamii) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, InvalidKeySpecException, DecoderException {
         String from = my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex();
         String to = send_addr.getText();
         Double value = Double.valueOf(send_amount.getText());
         Transaction tx = new Transaction(from,to,value);
-        try {
-            tx.sign(my_wallets.getWallet(my_wallets.BASE_WALLET));
-            _jamii.add_tx(tx);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (SignatureException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        } catch (DecoderException e) {
-            e.printStackTrace();
-        }
+        tx.sign(my_wallets.getWallet(my_wallets.BASE_WALLET));
+        _jamii.add_tx(tx);
     }
 }

@@ -31,7 +31,7 @@ public class Chain {
         return blk;
     }
 
-    public void add_tx(Transaction _tx) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException, DecoderException {
+    public void add_tx(Transaction _tx) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException, DecoderException, Error {
 
         if(_tx.getFrom().length() == 0 || _tx.getTarget().length() == 0 ){
             throw new Error("From & Target address is required");
