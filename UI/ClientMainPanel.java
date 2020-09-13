@@ -78,13 +78,17 @@ public class ClientMainPanel extends JPanel {
         pendingTxsPanel.mineBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                status.setText(" Mining block...");
                 String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
                 try {
                     String hash = jamii.mine_block(miner_address);
                     status.setBackground(Values.SUCCESS_STATUS_BACKGROUND);
-                    status.setText("Block mined ["+hash+"]");
+                    status.setText(" Block mined ["+hash+"]");
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
+                }catch (Error er){
+                    status.setBackground(Values.ERROR_STATUS_BACKGROUND);
+                    status.setText("Status: "+er.getMessage());
                 }
             }
         });
