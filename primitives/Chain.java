@@ -116,4 +116,19 @@ public class Chain {
     public List<Transaction> getPending_tx(){
         return pending_tx;
     }
+
+    public List<Transaction> getPastTx(String pubkey){
+        List<Transaction> txs = new ArrayList<>();
+
+        for(int i = 0; i < chain.size(); i++){
+            Block blk = chain.get(i);
+            for(int k = 0; k < blk.getVolume(); k++){
+                Transaction tx = blk.getTx(k);
+                if(tx.getFrom().equals(pubkey)){
+                   txs.add(tx);
+                }
+            }
+        }
+        return txs;
+    }
 }

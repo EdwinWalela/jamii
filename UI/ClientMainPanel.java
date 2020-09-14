@@ -102,6 +102,7 @@ public class ClientMainPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 renitWallets();
+                syncPastTx();
             }
         });
 
@@ -137,5 +138,12 @@ public class ClientMainPanel extends JPanel {
         status.setBackground(Values.IDLE_STATUS_BACKGROUND);
         status.setForeground(Values.STATUS_FOREGROUND);
     }
+
+    public void syncPastTx(){
+        pastTransactions.updateHistory(jamii.getPastTx(wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex()));
+        pastTransactions.buildTxList();
+    }
+
+
 
 }
