@@ -63,7 +63,8 @@ public class Transaction {
     }
 
     public String getFrom(){
-        return from;
+        if(from != null){return from;}
+        return "";
     }
 
     public double getValue() {

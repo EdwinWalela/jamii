@@ -43,6 +43,7 @@ public class IndexFrame extends JFrame{
 
         setTitle("Jamii");
         setSize(450,650);
+        setResizable(false);
         setVisible(true);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

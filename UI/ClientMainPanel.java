@@ -28,6 +28,7 @@ public class ClientMainPanel extends JPanel {
     JTabbedPane tabbedPane;
     JSeparator separator;
     JLabel status;
+    JButton syncBtn;
 
     public ClientMainPanel(){
         jamii = new Chain();
@@ -37,8 +38,10 @@ public class ClientMainPanel extends JPanel {
         pendingTxsPanel = new PendingTxPanel(jamii.getPending_tx());
         separator = new JSeparator();
         status = new JLabel(" Status: Idle");
+        syncBtn = new JButton("Sync");
 
-        tabbedPane.setBounds(20,10,400,570);
+        syncBtn.setBounds(350,15,70,20);
+        tabbedPane.setBounds(20,15,400,570);
         wallet.setBounds(20,10,400,550);
         pastTransactions.setBounds(450,10,400,290);
         pendingTxsPanel.setBounds(450,310,400,300);
@@ -93,10 +96,18 @@ public class ClientMainPanel extends JPanel {
             }
         });
 
+        syncBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                renitWallets();
+            }
+        });
+
         tabbedPane.add("Wallet",wallet);
         tabbedPane.add("History",pastTransactions);
         tabbedPane.add("Pending",pendingTxsPanel);
 
+        add(syncBtn);
         add(tabbedPane);
         add(status);
         setLayout(null);
@@ -112,6 +123,10 @@ public class ClientMainPanel extends JPanel {
     public void initWallets(Wallets _wallets){
         wallets = _wallets;
         wallet.initWallets(_wallets,jamii);
+    }
+
+    public void renitWallets(){
+        wallet.reinitWallets(jamii);
     }
 
 }

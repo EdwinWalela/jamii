@@ -95,6 +95,15 @@ public class Chain {
                 if(blk.getTx(k).getTarget().equals(pubkey)){
                     bal+=blk.getTx(k).getValue();
                 }
+                if(blk.getTx(k).getFrom().equals(pubkey)){
+                    bal-=blk.getTx(k).getValue();
+                }
+            }
+        }
+        for(int i = 0; i < pending_tx.size(); i++){
+            Transaction tx = pending_tx.get(i);
+            if(tx.getFrom().equals(pubkey)){
+                bal-=tx.getValue();
             }
         }
         return bal;

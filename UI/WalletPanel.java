@@ -75,7 +75,12 @@ public class WalletPanel extends JPanel {
         bal_value.setText(balance+" Coins");
         revalidate();
         repaint();
+    }
 
+    public void reinitWallets(Chain _jamii){
+        balance = _jamii.getBalance(my_wallets.getWallet(my_wallets.BASE_WALLET).getPublicKeyHex());
+        System.out.println(balance);
+        bal_value.setText(balance+" Coins");
     }
 
     public void initTransaction(Chain _jamii) throws SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, InvalidKeySpecException, DecoderException {
