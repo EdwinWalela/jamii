@@ -69,9 +69,9 @@ public class ClientMainPanel extends JPanel {
         pendingTxsPanel.refreshBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                pendingTxsPanel.txList.removeAll();
                 pendingTxsPanel.updateTx(jamii.getPending_tx());
                 pendingTxsPanel.buildTxList();
-
             }
         });
 

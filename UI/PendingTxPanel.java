@@ -16,17 +16,23 @@ public class PendingTxPanel extends JPanel {
 
     JButton mineBtn = new JButton("Verify Pending Transactions");
     JButton refreshBtn = new JButton("Refresh");
+    JPanel txList = new JPanel();
 
     public PendingTxPanel(List<Transaction> _pendingTxs){
         pendingTxs = _pendingTxs;
         Font font = new Font("San Serif",Font.PLAIN,13);
 
+        txList.setBounds(5,13,400,450);
         mineBtn.setBounds(50,475,200,30);
         refreshBtn.setBounds(270,475,80,30);
 
         mineBtn.setFont(font);
         refreshBtn.setFont(font);
 
+        txList.setLayout(null);
+        txList.setVisible(true);
+
+        add(txList);
         add(mineBtn);
         add(refreshBtn);
 
@@ -57,11 +63,11 @@ public class PendingTxPanel extends JPanel {
             tx_hash.setBounds(20,y+105,350,50);
             separator.setBounds(20,y+150,350,50);
 
-            add(from);
-            add(to);
-            add(signature);
-            add(tx_hash);
-            add(separator);
+            txList.add(from);
+            txList.add(to);
+            txList.add(signature);
+            txList.add(tx_hash);
+            txList.add(separator);
             y+=120;
         }
         revalidate();
