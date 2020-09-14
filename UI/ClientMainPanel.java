@@ -18,6 +18,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ClientMainPanel extends JPanel {
     Chain jamii;
@@ -127,6 +129,13 @@ public class ClientMainPanel extends JPanel {
 
     public void renitWallets(){
         wallet.reinitWallets(jamii);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+
+        status.setText("Status: Last sync [ " +dtf.format(now)+ " ]");
+        status.setBackground(Values.IDLE_STATUS_BACKGROUND);
+        status.setForeground(Values.STATUS_FOREGROUND);
     }
 
 }
