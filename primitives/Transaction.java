@@ -31,6 +31,14 @@ public class Transaction {
         }
     }
 
+    public Transaction(String _from,String _target, double _value,String _hash, String _signature){
+        from = _from;
+        target = _target;
+        value = _value;
+        hash = _hash;
+        signature = _signature;
+    }
+
     public void sign(Wallet wal) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         // Only allow signing of own transactions
         if(!wal.getPublicKeyHex().equals(from)){

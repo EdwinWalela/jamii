@@ -15,8 +15,8 @@ import java.util.List;
 public class Block {
     private int DIFF = Values.DIFFICULTY;
     private long timestamp;
-    private int nonce = 0;
-    private int volume;
+    private long nonce = 0;
+    private long volume;
     private String prev_hash = "";
     private String hash = "";
     private String merkle_root = "";
@@ -26,6 +26,15 @@ public class Block {
         volume = 0;
         timestamp = System.currentTimeMillis();
         txs = new ArrayList<>();
+    }
+
+    public Block(long _timestamp,long _nonce,long _volume,String _prev_hash, String _hash,List<Transaction> _txs){
+        timestamp = _timestamp;
+        nonce = _nonce;
+        volume = _volume;
+        prev_hash = _prev_hash;
+        hash = _hash;
+        txs = _txs;
     }
 
     public void hash(){
@@ -64,11 +73,11 @@ public class Block {
         return hash;
     }
 
-    public int getVolume() {
+    public long getVolume() {
         return volume;
     }
 
-    public int getNonce() {
+    public long getNonce() {
         return nonce;
     }
 

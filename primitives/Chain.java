@@ -21,14 +21,23 @@ public class Chain {
     public Chain(){
         chain = new ArrayList<>();
         pending_tx = new ArrayList<>();
-        chain.add(genesis());
+        genesis();
     }
 
-    private Block genesis(){
+    public Chain(List<Block> blks){
+        chain = blks;
+        pending_tx = new ArrayList<>();
+    }
+
+    private void genesis(){
         Block blk = new Block();
-        blk.addTx(new Transaction(null, Values.GENESIS_ADDRESS, Values.GENESIS_VALUE));
-        blk.hash();
-        return blk;
+        Transaction tx = new Transaction(null, Values.GENESIS_ADDRESS, Values.GENESIS_VALUE);
+        pending_tx.add(tx);
+        try {
+            mine_block(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void add_tx(Transaction _tx) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, SignatureException, DecoderException, Error {
@@ -49,7 +58,12 @@ public class Chain {
     }
 
     public Block latestBlock(){
-        return chain.get(chain.size()-1);
+        if(chain.size() != 0){
+            return chain.get(chain.size()-1);
+        }else{
+            return new Block();
+        }
+
     }
 
     public String mine_block(String miner_address) throws IOException {
@@ -92,7 +106,7 @@ public class Chain {
         for(int i = 0; i < chain.size(); i++){
             Block blk = chain.get(i);
             for(int k = 0; k < blk.getVolume(); k++){
-                if(blk.getTx(k).getTarget().equals(pubkey)){
+                if(blk.getTx(k).getTarget() != null && blk.getTx(k).getTarget().equals(pubkey)){
                     bal+=blk.getTx(k).getValue();
                 }
                 if(blk.getTx(k).getFrom().equals(pubkey)){

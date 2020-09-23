@@ -1,17 +1,18 @@
 package com.company.UI;
 
-import com.company.primitives.Chain;
-import com.company.primitives.Transaction;
-import com.company.primitives.Wallet;
-import com.company.primitives.Wallets;
+import com.company.primitives.*;
+import com.company.util.FileWriter;
 import com.company.util.Values;
 import com.sun.jdi.Value;
 import org.apache.commons.codec.DecoderException;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -20,6 +21,8 @@ import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientMainPanel extends JPanel {
     Chain jamii;
@@ -33,7 +36,33 @@ public class ClientMainPanel extends JPanel {
     JButton syncBtn;
 
     public ClientMainPanel(){
-        jamii = new Chain();
+        List<Block> blocks = new ArrayList<>();
+        try {
+            blocks = FileWriter.readBlock();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (DecoderException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+
+        if(blocks.size() > 0){
+            jamii = new Chain(blocks);
+        }else{
+            jamii = new Chain();
+        }
+
         wallet = new WalletPanel();
         tabbedPane = new JTabbedPane();
         pastTransactions = new PastTransactions();
