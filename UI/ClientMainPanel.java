@@ -136,6 +136,7 @@ public class ClientMainPanel extends JPanel {
                     status.setBackground(Values.ERROR_STATUS_BACKGROUND);
                     status.setText("Status: "+er.getMessage());
                 }
+                // TODO: move tx verification to a function & broadcast block
                 conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
             }
         });
