@@ -8,6 +8,8 @@ public class Values {
     public static final double GENESIS_VALUE = 50;
     public static final double MINER_REWARD = 0.0;
     public static final long TX_MATURITY = 179999;
+    public static final int SOCKET_PORT = 7000;
+    public static final int SOCKET_PORT_SECONDARY = 7001;
     public static final String BLOCK_DIR = "./blocks/";
     public static final String BLOCK_FORMAT = ".json";
     public static final Color IDLE_STATUS_BACKGROUND = new Color(0, 106, 201);

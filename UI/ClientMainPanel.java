@@ -2,6 +2,7 @@ package com.company.UI;
 
 import com.company.primitives.*;
 import com.company.util.FileWriter;
+import com.company.util.SocketConn;
 import com.company.util.Values;
 import com.sun.jdi.Value;
 import org.apache.commons.codec.DecoderException;
@@ -35,7 +36,18 @@ public class ClientMainPanel extends JPanel {
     JLabel status;
     JButton syncBtn;
 
+    SocketConn conn;
+
     public ClientMainPanel(){
+
+        try {
+            conn = new SocketConn();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        conn.start();
+
         List<Block> blocks = new ArrayList<>();
         try {
             blocks = FileWriter.readBlock();
@@ -124,6 +136,7 @@ public class ClientMainPanel extends JPanel {
                     status.setBackground(Values.ERROR_STATUS_BACKGROUND);
                     status.setText("Status: "+er.getMessage());
                 }
+                conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
             }
         });
 

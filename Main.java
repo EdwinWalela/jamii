@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.UI.IndexFrame;
 import com.company.util.FileWriter;
+import com.company.util.SocketConn;
 
 public class Main {
 
@@ -53,7 +54,6 @@ public class Main {
 //            ch.mine_block(base_wall_pubKey);
 
         IndexFrame index = new IndexFrame();
-
     }
 
 }
