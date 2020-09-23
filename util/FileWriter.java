@@ -42,6 +42,7 @@ public class FileWriter {
         for(int i = 0; i < block.getVolume(); i++){
             Transaction tx = block.getTx(i);
             JSONObject tx_obj = new JSONObject();
+            tx_obj.put("timestamp",tx.getTimestamp());
             tx_obj.put("from",tx.getFrom());
             tx_obj.put("target",tx.getTarget());
             tx_obj.put("value",tx.getValue());
@@ -95,8 +96,9 @@ public class FileWriter {
                         double value = (double) tx_json.get("value");
                         String tx_hash = (String) tx_json.get("hash");
                         String target = (String) tx_json.get("target");
+                        long tx_timestamp = (long) tx_json.get("timestamp");
 
-                        Transaction tx = new Transaction(from,target,value,tx_hash,signature);
+                        Transaction tx = new Transaction(from,target,value,tx_hash,signature,tx_timestamp);
 
                         if(tx.isValid()){
                             txs.add(tx);

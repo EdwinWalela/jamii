@@ -17,26 +17,29 @@ public class Transaction {
     private double value;
     private String hash;
     private String signature;
+    private long timestamp;
 
     public Transaction(String _from,String _target,double _value){
         from = _from;
         target = _target;
         value = _value;
         signature = "";
+        timestamp = System.currentTimeMillis();
 
         try {
-            hash = SHA256.hash(from + target + value);
+            hash = SHA256.hash(from + target + value+ timestamp);
         }catch(NoSuchAlgorithmException e){
             e.printStackTrace();
         }
     }
 
-    public Transaction(String _from,String _target, double _value,String _hash, String _signature){
+    public Transaction(String _from,String _target, double _value,String _hash, String _signature,long _timestamp){
         from = _from;
         target = _target;
         value = _value;
         hash = _hash;
         signature = _signature;
+        timestamp = _timestamp;
     }
 
     public void sign(Wallet wal) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
@@ -61,8 +64,8 @@ public class Transaction {
         if(signature.length() == 0) {
             return false;
         }
-            // transaction must be signed
 
+        // transaction must be signed
         EC ec = new EC();
 
         // Check if the transaction has been signed by the initiator
@@ -77,6 +80,10 @@ public class Transaction {
 
     public double getValue() {
         return value;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     public String getTarget(){

@@ -72,8 +72,16 @@ public class Chain {
         if(pending_tx.size()>0) {
             blk.addTx(coinBase);
             for (int i = 0; i < pending_tx.size(); i++) {
-                blk.addTx(pending_tx.get(i));
+                if(System.currentTimeMillis() - pending_tx.get(i).getTimestamp() < Values.TX_MATURITY && pending_tx.get(i).getFrom() != ""){
+                    continue;
+                }else {
+                    blk.addTx(pending_tx.get(i));
+                }
             }
+            if(blk.getVolume() == 1){
+                throw new Error("Pending transaction(s) not mature");
+            }
+
             blk.setPrev_hash(latestBlock().getHash());
             blk.hash();
             chain.add(blk);
