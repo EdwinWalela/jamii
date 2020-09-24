@@ -1,5 +1,7 @@
 package com.company.util;
 
+import org.json.simple.JSONObject;
+
 import java.io.*;
 import java.net.BindException;
 import java.net.ServerSocket;
@@ -30,8 +32,6 @@ public class SocketConn extends Thread{
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             out.writeUTF("Connected to "+socket.getLocalAddress());
 
-            socket.close();
-
         }catch (SocketTimeoutException e){
             System.out.println("connection timed out");
         } catch (IOException e) {
@@ -39,25 +39,21 @@ public class SocketConn extends Thread{
         }
     }
 
-    public void bind(String server,int port){
+    public DataOutputStream bind(String server,int port){
+        DataOutputStream out = null;
         try{
             Socket socket = new Socket(server,port);
             System.out.println("Connected to "+server+" on port "+port);
 
             OutputStream outStream = socket.getOutputStream();
-            DataOutputStream out = new DataOutputStream(outStream);
+            out = new DataOutputStream(outStream);
 
-            out.writeUTF("Hello from "+socket.getLocalSocketAddress());
 
-            InputStream inputStream = socket.getInputStream();
-            DataInputStream in = new DataInputStream(inputStream);
-
-            System.out.println("Remote says "+ in.readUTF());
-
-            socket.close();
         }catch (IOException e){
             e.printStackTrace();
         }
+        // Return output stream
+        return out;
     }
 
 }

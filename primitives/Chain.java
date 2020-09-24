@@ -66,7 +66,7 @@ public class Chain {
 
     }
 
-    public String mine_block(String miner_address) throws IOException {
+    public Block mine_block(String miner_address) throws IOException {
         Block blk = new Block();
         Transaction coinBase = new Transaction(null,miner_address,Values.MINER_REWARD);
         if(pending_tx.size()>0) {
@@ -90,7 +90,7 @@ public class Chain {
             throw new Error("No pending transactions");
         }
         FileWriter.writeJSON(blk);
-        return blk.getHash();
+        return blk;
     }
 
     public boolean isValid() throws InvalidKeySpecException, SignatureException, NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException, DecoderException {

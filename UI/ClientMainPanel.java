@@ -6,16 +6,14 @@ import com.company.util.SocketConn;
 import com.company.util.Values;
 import com.sun.jdi.Value;
 import org.apache.commons.codec.DecoderException;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -124,20 +122,7 @@ public class ClientMainPanel extends JPanel {
         pendingTxsPanel.mineBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                status.setText(" Mining block...");
-                String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
-                try {
-                    String hash = jamii.mine_block(miner_address);
-                    status.setBackground(Values.SUCCESS_STATUS_BACKGROUND);
-                    status.setText(" Block mined ["+hash+"]");
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }catch (Error er){
-                    status.setBackground(Values.ERROR_STATUS_BACKGROUND);
-                    status.setText("Status: "+er.getMessage());
-                }
-                // TODO: move tx verification to a function & broadcast block
-                conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
+                verifyTxs();
             }
         });
 
@@ -160,6 +145,37 @@ public class ClientMainPanel extends JPanel {
 
         setSize(890,610);
         setVisible(true);
+    }
+
+    public void verifyTxs(){
+        status.setText(" Mining block...");
+        String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
+        Block blk = null;
+        try {
+            blk = jamii.mine_block(miner_address);
+            status.setBackground(Values.SUCCESS_STATUS_BACKGROUND);
+            status.setText(" Block mined ["+blk.getHash()+"]");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+            return;
+        }catch (Error er){
+            status.setBackground(Values.ERROR_STATUS_BACKGROUND);
+            status.setText("Status: "+er.getMessage());
+            return;
+        }
+
+        DataOutputStream out = conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
+
+        // Convert new block to JSON string
+        String JSONblock = FileWriter.blockToJSON(blk).toJSONString();
+
+        try {
+            out.writeUTF(JSONblock);
+        } catch (IOException e) {
+            status.setBackground(Values.ERROR_STATUS_BACKGROUND);
+            status.setText("Status: "+e.getMessage());
+        }
+
     }
 
     public void initTransaction() throws DecoderException, NoSuchAlgorithmException, UnsupportedEncodingException, SignatureException, InvalidKeyException, InvalidKeySpecException {

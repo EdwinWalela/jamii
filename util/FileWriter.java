@@ -29,7 +29,7 @@ public class FileWriter {
         }
     }
 
-    public static void writeJSON(Block block) throws IOException {
+    public static JSONObject blockToJSON(Block block){
         JSONObject blockObj = new JSONObject();
         blockObj.put("timestamp",block.getTimestamp());
         blockObj.put("nonce",block.getNonce());
@@ -53,6 +53,11 @@ public class FileWriter {
         }
 
         blockObj.put("transactions",txs);
+        return blockObj;
+    }
+
+    public static void writeJSON(Block block) throws IOException {
+        JSONObject blockObj = blockToJSON(block);
         String FILE_NAME = block.getTimestamp()+Values.BLOCK_FORMAT;
 
         File block_dump = new File(Values.BLOCK_DIR+FILE_NAME);
