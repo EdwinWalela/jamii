@@ -146,7 +146,7 @@ public class Chain {
             Block blk = chain.get(i);
             for(int k = 0; k < blk.getVolume(); k++){
                 Transaction tx = blk.getTx(k);
-                if(tx.getFrom().equals(pubkey)){
+                if(tx.getFrom().equals(pubkey) || tx.getTarget().equals(pubkey)){
                    txs.add(tx);
                 }
             }
