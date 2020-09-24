@@ -34,17 +34,9 @@ public class ClientMainPanel extends JPanel {
     JLabel status;
     JButton syncBtn;
 
-    SocketConn conn;
+
 
     public ClientMainPanel(){
-
-        try {
-            conn = new SocketConn();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        conn.start();
 
         List<Block> blocks = new ArrayList<>();
         try {
@@ -131,6 +123,7 @@ public class ClientMainPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 renitWallets();
                 syncPastTx();
+                //TODO: Discover peers and request blocks from them
             }
         });
 
@@ -148,7 +141,16 @@ public class ClientMainPanel extends JPanel {
     }
 
     public void verifyTxs(){
-        status.setText(" Mining block...");
+//        SocketConn conn = null;
+//
+//        try {
+//            conn = new SocketConn();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        conn.start();
+        status.setText("Mining block...");
         String miner_address = wallets.getWallet(wallets.BASE_WALLET).getPublicKeyHex();
         Block blk = null;
         try {
@@ -163,18 +165,18 @@ public class ClientMainPanel extends JPanel {
             status.setText("Status: "+er.getMessage());
             return;
         }
-
-        DataOutputStream out = conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
-
-        // Convert new block to JSON string
-        String JSONblock = FileWriter.blockToJSON(blk).toJSONString();
-
-        try {
-            out.writeUTF(JSONblock);
-        } catch (IOException e) {
-            status.setBackground(Values.ERROR_STATUS_BACKGROUND);
-            status.setText("Status: "+e.getMessage());
-        }
+//
+//        DataOutputStream out = conn.bind("localhost",Values.SOCKET_PORT_SECONDARY);
+//
+//        // Convert new block to JSON string
+//        String JSONblock = FileWriter.blockToJSON(blk).toJSONString();
+//
+//        try {
+//            out.writeUTF(JSONblock);
+//        } catch (IOException e) {
+//            status.setBackground(Values.ERROR_STATUS_BACKGROUND);
+//            status.setText("Status: "+e.getMessage());
+//        }
 
     }
 

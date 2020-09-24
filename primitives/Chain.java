@@ -31,10 +31,10 @@ public class Chain {
 
     private void genesis(){
         Block blk = new Block();
-        Transaction tx = new Transaction(null, Values.GENESIS_ADDRESS, Values.GENESIS_VALUE);
+        Transaction tx = new Transaction("", Values.GENESIS_ADDRESS, Values.GENESIS_VALUE);
         pending_tx.add(tx);
         try {
-            mine_block(null);
+            mine_block("");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class Chain {
 
     public Block mine_block(String miner_address) throws IOException {
         Block blk = new Block();
-        Transaction coinBase = new Transaction(null,miner_address,Values.MINER_REWARD);
+        Transaction coinBase = new Transaction("",miner_address,Values.MINER_REWARD);
         if(pending_tx.size()>0) {
             blk.addTx(coinBase);
             for (int i = 0; i < pending_tx.size(); i++) {
